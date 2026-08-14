@@ -1,0 +1,109 @@
+name: 签名发行候选
+
+on:
+  workflow_dispatch:
+    inputs:
+      desktop_version:
+        description: 必须与 package.json 完全一致的桌面版本
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Windows x64 签名候选
+    runs-on: windows-latest
+    timeout-minutes: 90
+    environment: windows-signing
+    steps:
+      - name: 检出源码
+        uses: actions/checkout@v4
+
+      - name: 安装固定 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.11.1
+
+      - name: 安装固定 pnpm
+        shell: pwsh
+        run: |
+          corepack enable
+          corepack prepare pnpm@11.7.0 --activate
+
+      - name: 安装固定 Rust
+        shell: pwsh
+        run: |
+          rustup toolchain install 1.91.1 --profile minimal
+          rustup default 1.91.1
+
+      - name: 校验版本确认
+        shell: pwsh
+        env:
+          CONFIRMED_VERSION: ${{ inputs.desktop_version }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $actual = (Get-Content -LiteralPath package.json -Raw | ConvertFrom-Json).version
+          if ($actual -ne $env:CONFIRMED_VERSION) {
+            throw "确认版本 $env:CONFIRMED_VERSION 与 package.json $actual 不一致。"
+          }
+
+      - name: 安装冻结依赖
+        shell: pwsh
+        run: pnpm install --frozen-lockfile
+
+      - name: 运行源码门禁
+        shell: pwsh
+        run: |
+          pnpm run check
+          pnpm audit --prod --audit-level high
+          cargo test --locked --manifest-path native/launcher/Cargo.toml
+
+      - name: 暂存签名证书
+        id: certificate
+        shell: pwsh
+        env:
+          CERTIFICATE_BASE64: ${{ secrets.WINDOWS_CERTIFICATE_PFX_BASE64 }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if ([string]::IsNullOrWhiteSpace($env:CERTIFICATE_BASE64)) {
+            throw 'windows-signing 环境缺少 WINDOWS_CERTIFICATE_PFX_BASE64。'
+          }
+          $path = Join-Path $env:RUNNER_TEMP 'dsh-desktop-codesign.pfx'
+          [IO.File]::WriteAllBytes($path, [Convert]::FromBase64String($env:CERTIFICATE_BASE64))
+          "path=$path" >> $env:GITHUB_OUTPUT
+
+      - name: 构建并验证签名候选
+        shell: pwsh
+        env:
+          WINDOWS_CERTIFICATE_FILE: ${{ steps.certificate.outputs.path }}
+          WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
+        run: pnpm run release:win
+
+      - name: 上传不可变候选
+        uses: actions/upload-artifact@v4
+        with:
+          name: dsh-desktop-${{ inputs.desktop_version }}-signed-candidate
+          path: |
+            out/candidates/*/make/squirrel.windows/x64/*
+            out/candidates/*/defender-scan.json
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: 清理签名证书
+        if: always()
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $expected = [IO.Path]::GetFullPath((Join-Path $env:RUNNER_TEMP 'dsh-desktop-codesign.pfx'))
+          if (Test-Path -LiteralPath $expected) {
+            $item = Get-Item -LiteralPath $expected -Force
+            if ($item.PSIsContainer -or (($item.Attributes -band [IO.FileAttributes]::ReparsePoint) -ne 0)) {
+              throw '拒绝删除非普通签名证书文件。'
+            }
+            if ([IO.Path]::GetFullPath($item.DirectoryName) -ne [IO.Path]::GetFullPath($env:RUNNER_TEMP)) {
+              throw '拒绝删除 RUNNER_TEMP 外的文件。'
+            }
+            Remove-Item -LiteralPath $expected -Force -ErrorAction Stop
+          }

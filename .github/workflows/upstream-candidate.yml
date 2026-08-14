@@ -1,0 +1,82 @@
+name: Harness 上游候选
+
+on:
+  schedule:
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  propose:
+    name: 检查并提议精确版本
+    runs-on: windows-latest
+    timeout-minutes: 90
+    steps:
+      - name: 检出源码
+        uses: actions/checkout@v4
+
+      - name: 安装固定 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.11.1
+
+      - name: 安装固定 pnpm
+        shell: pwsh
+        run: |
+          corepack enable
+          corepack prepare pnpm@11.7.0 --activate
+
+      - name: 安装固定 Rust
+        shell: pwsh
+        run: |
+          rustup toolchain install 1.91.1 --profile minimal
+          rustup default 1.91.1
+
+      - name: 安装冻结依赖
+        shell: pwsh
+        run: pnpm install --frozen-lockfile
+
+      - name: 检查官方最新版本
+        id: upstream
+        shell: pwsh
+        run: pnpm run check:upstream
+
+      - name: 生成并验证候选
+        if: steps.upstream.outputs.update_available == 'true'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_VERSION: ${{ steps.upstream.outputs.version }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $branch = "automation/harness-$env:CANDIDATE_VERSION"
+          $existing = gh pr list --state open --head $branch --json number --jq 'length'
+          if ([int]$existing -gt 0) {
+            Write-Host "精确版本候选已经存在：$branch"
+            exit 0
+          }
+          git switch -c $branch
+          pnpm run update:harness -- $env:CANDIDATE_VERSION
+          pnpm run check
+          pnpm audit --prod --audit-level high
+          pnpm run stage:runtime
+          pnpm run smoke:launcher
+          pnpm run smoke:native
+          pnpm run smoke:runtime
+          pnpm run stage:app
+          pnpm exec tsx scripts/package-win.ts
+          pnpm run audit:package
+          pnpm run smoke:packaged
+          pnpm run make:installer
+          pnpm run audit:installer
+          pnpm run smoke:installer
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- desktop.config.json packages/harness-runtime/package.json pnpm-lock.yaml
+          git commit -m "chore: 提议 Harness $env:CANDIDATE_VERSION"
+          git push origin "HEAD:$branch"
+          $body = "自动生成的精确 Harness 版本候选。已刷新 npm SRI、官方 tarball、冻结锁文件，并通过源码、依赖审计、运行时、原生模块、打包目录、打包端到端、内部安装器结构和安装卸载门禁。此任务不会签名或发布。"
+          gh pr create --base $env:GITHUB_REF_NAME --head $branch --title "chore: 提议 Harness $env:CANDIDATE_VERSION" --body $body

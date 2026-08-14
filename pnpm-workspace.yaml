@@ -1,0 +1,30 @@
+packages:
+  - packages/*
+
+injectWorkspacePackages: true
+nodeLinker: hoisted
+verifyDepsBeforeRun: false
+
+# Forge 7.11.2 仍把 Electron 官方 node-gyp 固定到 Git commit；使用其官方 npm
+# 发布物保持传递依赖全部来自 registry，同时保留 pnpm 的 exotic subdependency 阻断。
+overrides:
+  '@electron/rebuild@3.7.2>@electron/node-gyp': 10.2.0-electron.2
+
+# DSH 的 rc.6 workspace 包同日一起发布。桌面项目必须立即验证最新 Harness，
+# 因而对 DeepSeek scope 免除 24 小时成熟期；锁文件和版本候选评审仍是发布门禁。
+minimumReleaseAge: 1440
+minimumReleaseAgeStrict: true
+minimumReleaseAgeExclude:
+  - '@deepseek-ai/*'
+
+allowBuilds:
+  '@deepseek-ai/dsh-subprocess-local': true
+  '@google/genai': false
+  '@parcel/watcher': true
+  '@vscode/ripgrep': true
+  electron: true
+  electron-winstaller: true
+  esbuild: true
+  koffi: true
+  node-pty: true
+  protobufjs: false

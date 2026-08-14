@@ -1,0 +1,123 @@
+:root {
+  color-scheme: light;
+  font-family: "Segoe UI Variable", "Microsoft YaHei UI", sans-serif;
+  background: #f3f1ec;
+  color: #18211d;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(99, 157, 126, .16), transparent 34rem),
+    linear-gradient(135deg, #f8f7f3 0%, #ece9e1 100%);
+}
+
+.shell {
+  width: min(42rem, calc(100vw - 4rem));
+  padding: 4rem;
+  border: 1px solid rgba(24, 33, 29, .12);
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, .76);
+  box-shadow: 0 2rem 6rem rgba(42, 54, 47, .12);
+}
+
+.brand {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-bottom: 2rem;
+  border-radius: 1.25rem;
+  background: #1e5f46;
+  color: white;
+  font-size: 1.15rem;
+  font-weight: 750;
+  letter-spacing: .08em;
+}
+
+.eyebrow {
+  margin: 0 0 .75rem;
+  color: #5b7065;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .17em;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 640;
+  letter-spacing: -.04em;
+  line-height: 1.08;
+}
+
+.message, .hint {
+  max-width: 34rem;
+  color: #526159;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.message { margin: 1.5rem 0; }
+.hint { margin: 1rem 0 1.75rem; font-size: .9rem; }
+
+.progress {
+  height: .3rem;
+  margin-top: 2.5rem;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: #dfe5e0;
+}
+
+.progress span {
+  display: block;
+  width: 42%;
+  height: 100%;
+  border-radius: inherit;
+  background: #1e5f46;
+  animation: travel 1.5s ease-in-out infinite alternate;
+}
+
+.failure .brand { background: #8b3d32; }
+.failure code {
+  display: inline-block;
+  padding: .45rem .7rem;
+  border-radius: .45rem;
+  background: #eee9e5;
+  color: #70423a;
+}
+
+.actions {
+  display: flex;
+  gap: .75rem;
+  margin-top: 1.5rem;
+}
+
+button {
+  padding: .65rem 1.1rem;
+  border: 0;
+  border-radius: .5rem;
+  background: #1e5f46;
+  color: white;
+  cursor: pointer;
+  font: inherit;
+}
+
+button.secondary {
+  background: #d8d4ca;
+  color: #2d312f;
+}
+
+@keyframes travel {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(240%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress span { animation: none; width: 100%; }
+}

@@ -1,0 +1,17 @@
+deepseek-harness/
+deepseek-harness
+node_modules/
+dist/
+out/
+.runtime/
+.build-cache/
+.app-stage/
+.acceptance-install/
+coverage/
+native/launcher/target/
+*.log
+.env
+.env.*
+!.env.example
+electron-windows-sign.log
+pnpm-debug.log*

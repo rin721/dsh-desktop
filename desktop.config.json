@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "harness": {
+    "package": "@deepseek-ai/dsh",
+    "version": "0.1.0-rc.6",
+    "bin": "lib/bin.js",
+    "integrity": "sha512-brpZfED7ieRa2PQ5tUxMhHrM1pb2CmKFVM/f6yMULBDMicahk+Z2OsHgTwTDnoiZm23Ftu9rQz0NN4pflaoJcg==",
+    "tarball": "https://registry.npmjs.org/@deepseek-ai/dsh/-/dsh-0.1.0-rc.6.tgz"
+  },
+  "node": {
+    "version": "24.11.1",
+    "platform": "win",
+    "arch": "x64",
+    "archive": "node-v24.11.1-win-x64.zip",
+    "baseUrl": "https://nodejs.org/dist/v24.11.1"
+  },
+  "electron": {
+    "version": "43.4.0",
+    "archive": "electron-v43.4.0-win32-x64.zip",
+    "baseUrl": "https://github.com/electron/electron/releases/download/v43.4.0",
+    "win32X64ZipSha256": "ef0709cfa719739acce73de6f9b684304baf38c6454376638a70d34a7cecffe0"
+  },
+  "startup": {
+    "readinessTimeoutMs": 90000,
+    "shutdownTimeoutMs": 7000,
+    "maxDiagnosticBytes": 65536
+  }
+}
