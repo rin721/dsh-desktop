@@ -6,6 +6,8 @@ DSH Desktop 是 DeepSeek Harness 的 Windows 桌面伴生项目。它把官方�
 
 实施进行中。精确运行时、Windows Job Object 监管器、安全桌面窗口、不可变候选目录、全量文件索引、第三方组件清单、签名发行门禁、上游版本候选和稳定/上一版回滚指针已经实现。当前清洁构建已通过 34,850 个运行时文件的应用与内部安装器双重审计；Node.js 与 Electron 下载 ZIP 均不进入应用。真实打包候选已通过完整插件加载、会话创建、流式事件、renderer 刷新、隔离 `$DSH_HOME` 重启持久化和故障页验证。
 
+Windows EXE、窗口、Squirrel Setup、启动页和错误页共用同一蓝色角色图标体系；透明母版、多尺寸 PNG、ICO、视觉检查表和哈希清单见[图标资源](assets/icons/README.md)。
+
 当前工作树仍不是可发布产品：没有可用的代码签名证书，尚未取得 Windows 10/11 干净虚拟机、真实模型流式回答、上一签名版本升级/回滚和 SmartScreen 或组织指定发布扫描证据；本机旧内部安装器卸载后还出现 Squirrel 延迟删除残留。当前未签名安装器已有一次可追溯的 Microsoft Defender 自定义扫描零匹配记录。
 
 ## 固定版本

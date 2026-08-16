@@ -9,6 +9,8 @@ out/
 .acceptance-install/
 coverage/
 native/launcher/target/
+__pycache__/
+*.py[cod]
 *.log
 .env
 .env.*

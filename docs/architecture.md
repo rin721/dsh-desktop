@@ -11,6 +11,7 @@
 | `deepseek-harness/` | 被忽略的上游参考检出，不进入桌面 Git 历史或安装包。 |
 | `packages/harness-runtime/` | 仅声明官方 Harness 精确版本，供 `pnpm deploy --prod` 生成生产闭包。 |
 | `src/` | 桌面主进程、监管器、启动适配器和本地启动/失败页面。 |
+| `assets/icons/` | 角色图标透明母版、多尺寸 PNG、Windows ICO、视觉检查表和完整性清单。 |
 | `native/launcher/` | Windows Job Object 启动器源码；其 release 可执行文件作为独立资源进入安装包。 |
 | `.runtime/` | 可再生的 Node.js、Harness 生产闭包、启动器和版本清单，不提交。 |
 | `.build-cache/` | 经过固定哈希验证的官方发行压缩包缓存，不提交且不进入候选。 |

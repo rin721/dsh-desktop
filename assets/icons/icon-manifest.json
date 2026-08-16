@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "source": "app-icon-master.png",
+  "sourceSha256": "21ddb5d136a56e2f5eef5c2e7ac6c3f03e398851d90ae925f2dcd17ebdb0a255",
+  "pngSizes": [
+    16,
+    20,
+    24,
+    32,
+    40,
+    48,
+    64,
+    96,
+    128,
+    192,
+    256,
+    512,
+    1024
+  ],
+  "icoSizes": [
+    16,
+    20,
+    24,
+    32,
+    40,
+    48,
+    64,
+    128,
+    256
+  ],
+  "files": [
+    {
+      "path": "app-icon-contact-sheet.png",
+      "bytes": 276080,
+      "sha256": "022594bcae3432ace20ea70a9c590c9b63be0caf24d4c28b74c6b2058de04d29"
+    },
+    {
+      "path": "app-icon.ico",
+      "bytes": 156512,
+      "sha256": "b5ba54a51c3392365638d1d96f29d5680320b376e5a65f96dc973b8400946322"
+    },
+    {
+      "path": "png/app-icon-1024.png",
+      "bytes": 1095631,
+      "sha256": "21ddb5d136a56e2f5eef5c2e7ac6c3f03e398851d90ae925f2dcd17ebdb0a255"
+    },
+    {
+      "path": "png/app-icon-128.png",
+      "bytes": 29886,
+      "sha256": "753225b4db2255576427ce549526b2c2074455986cd45d3343668c322dfd56b0"
+    },
+    {
+      "path": "png/app-icon-16.png",
+      "bytes": 866,
+      "sha256": "648e82a6572826c702f15b5ee75db20d47074ae6510c3099f24925a256b9bab9"
+    },
+    {
+      "path": "png/app-icon-192.png",
+      "bytes": 59225,
+      "sha256": "f3c7e1ea21f832b39c948a074ca4174b05358af361cf345e1bc8bcc545947cf5"
+    },
+    {
+      "path": "png/app-icon-20.png",
+      "bytes": 1271,
+      "sha256": "4f6bc9653088aace68ead90fe9a42f93cea399831d5d89a9a4a6eff832f852bd"
+    },
+    {
+      "path": "png/app-icon-24.png",
+      "bytes": 1754,
+      "sha256": "47d3647643df463ff47f19f68f8f342aa716397d2e4f8ef87d409f15999d88b4"
+    },
+    {
+      "path": "png/app-icon-256.png",
+      "bytes": 97178,
+      "sha256": "9393e1d4a44dd088c0b05d3a90c85609605274b9d5cd182080cb846a9f4b2b26"
+    },
+    {
+      "path": "png/app-icon-32.png",
+      "bytes": 2913,
+      "sha256": "f2bde1a68bc12c2c9afe11d6334a57ffac497e641c2cac070d3e8e0c2eff9e49"
+    },
+    {
+      "path": "png/app-icon-40.png",
+      "bytes": 4277,
+      "sha256": "aa18cbdd50c025ff8866d086094d5a70f4581a36874af8aa0d05191e848c48f0"
+    },
+    {
+      "path": "png/app-icon-48.png",
+      "bytes": 5684,
+      "sha256": "fe3ed3864cce2c17c8915c7a2fce2b10032c1b3728ed9439a5b2740aeb56bbe1"
+    },
+    {
+      "path": "png/app-icon-512.png",
+      "bytes": 326335,
+      "sha256": "6077b7e85a91e158768cf3d44884709bb364b91008065e0ed877b3d297e7574c"
+    },
+    {
+      "path": "png/app-icon-64.png",
+      "bytes": 9236,
+      "sha256": "8a20ea66112b687700c0809642fb84709e94cbfdbb736136a77fe3042e92ecc2"
+    },
+    {
+      "path": "png/app-icon-96.png",
+      "bytes": 18263,
+      "sha256": "c3b2341e678545f2a8329d9d8870f14b94d091f36ec05d51c76b783e4600d1a8"
+    }
+  ]
+}

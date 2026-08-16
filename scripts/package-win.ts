@@ -8,6 +8,7 @@ import { loadVerifiedRuntimeLayout } from '../src/supervisor/runtime-layout.js'
 import { buildCacheRoot, pathExists, projectRoot, runtimeRoot } from './lib/project.js'
 import { appStageRoot } from './lib/stage.js'
 import { candidatePaths } from './lib/artifacts.js'
+import { windowsIconPath } from './lib/icon-assets.js'
 
 const config = await readProductConfig(resolve(projectRoot, 'desktop.config.json'))
 const candidate = await candidatePaths()
@@ -24,6 +25,7 @@ const outputPaths = await packager({
   electronZipDir: resolve(buildCacheRoot, 'electron'),
   asar: true,
   executableName: 'dsh-desktop',
+  icon: windowsIconPath,
   prune: false,
   afterCopy: [((buildPath, _electronVersion, _platform, _arch, callback) => {
     void sanitizePackagedManifest(buildPath).then(() => callback(), error => callback(error as Error))

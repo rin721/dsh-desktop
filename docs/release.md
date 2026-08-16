@@ -35,6 +35,8 @@ corepack pnpm run verify:release
 
 `release:win` 从绝对 `WINDOWS_CERTIFICATE_FILE` 和 `WINDOWS_CERTIFICATE_PASSWORD` 读取证书与口令，缺失时在修改发行产物前失败，且日志不输出秘密。执行顺序是运行时暂存与冒烟、launcher 签名、重写运行时索引和身份、应用打包、应用 EXE 签名、包审计与 E2E、Squirrel 签名安装器、解包复验、Defender 扫描和安装卸载 smoke。Setup.exe、应用 EXE 和 launcher 都必须通过 Authenticode `/pa /all`；Defender 必须启用、扫描命令必须成功、候选路径的匹配威胁检测数必须为零，并写出绑定安装器 SHA-256 的非生产扫描证据。
 
+品牌资源发布前必须通过 `verify:icons`，并人工查看 `assets/icons/app-icon-contact-sheet.png` 的小尺寸辨识度和透明边缘。角色参考图、生成母版和衍生资源的分发授权必须由发布负责人确认；资源哈希门禁不能替代版权或商标审查。
+
 `.github/workflows/signed-candidate.yml` 只接受手动触发和受保护 `windows-signing` 环境，固定 Node.js、pnpm 与 Rust，运行源码、依赖审计和完整发行门禁，最后上传待审批候选。上传不等于稳定发布，工作流总会尝试删除临时证书文件。
 
 ## 上游候选

@@ -205,6 +205,7 @@ function createMainWindow(
     minHeight: 620,
     show: false,
     backgroundColor: '#f3f1ec',
+    icon: resolve(app.getAppPath(), 'dist', 'renderer', 'icons', 'png', 'app-icon-256.png'),
     autoHideMenuBar: false,
     webPreferences: {
       nodeIntegration: false,

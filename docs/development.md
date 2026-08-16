@@ -33,6 +33,10 @@ corepack pnpm run smoke:runtime
 
 三项检查分别验证 Windows Unicode 命令行往返、固定 Node.js 下的 `node-pty` 与 `koffi` 原生模块，以及真实官方 Harness 的就绪探测和优雅关闭。
 
+## 图标资源
+
+应用使用 `assets/icons/app-icon-master.png` 作为透明母版，派生的多尺寸 PNG 和 `app-icon.ico` 分别供窗口、启动与错误页、应用 EXE 和 Squirrel Setup 使用。ASAR 只包含页面实际消费的 192 和 256 像素 PNG，不携带参考原图、生成中间件、母版、其他尺寸、联系表或 ICO。日常构建只消费已生成资源，不要求安装 Python；修改母版时才使用带 Pillow 的 Python 3 运行 `scripts/generate_icon_assets.py`，随后必须查看联系表并执行 `corepack pnpm run verify:icons`。尺寸、哈希、来源和生成规范见[图标资源说明](../assets/icons/README.md)。
+
 ## 本地启动与打包
 
 ```powershell

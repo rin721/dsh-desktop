@@ -2,6 +2,7 @@ import type { ForgeConfig } from '@electron-forge/shared-types'
 import type { MakerSquirrelConfig } from '@electron-forge/maker-squirrel'
 import type { SignToolOptions } from '@electron/windows-sign'
 import { isAbsolute, relative, resolve, sep } from 'node:path'
+import { windowsIconPath } from './scripts/lib/icon-assets.js'
 import { validateSigningEnvironment } from './scripts/lib/signing.js'
 
 const releaseSigning = process.env.DSH_DESKTOP_RELEASE === '1'
@@ -11,6 +12,7 @@ const makerConfig: MakerSquirrelConfig = {
   authors: 'DSH Desktop contributors',
   description: 'DeepSeek Harness 的上游兼容 Windows 桌面外壳',
   noDelta: true,
+  setupIcon: windowsIconPath,
 }
 const defaultOutDir = resolve(import.meta.dirname, 'out')
 const requestedOutDir = process.env.DSH_DESKTOP_FORGE_OUT_DIR
@@ -26,6 +28,7 @@ const config: ForgeConfig = {
   outDir,
   packagerConfig: {
     executableName: 'dsh-desktop',
+    icon: windowsIconPath,
   },
   makers: [
     {

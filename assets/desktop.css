@@ -13,8 +13,8 @@ body {
   display: grid;
   place-items: center;
   background:
-    radial-gradient(circle at 20% 15%, rgba(99, 157, 126, .16), transparent 34rem),
-    linear-gradient(135deg, #f8f7f3 0%, #ece9e1 100%);
+    radial-gradient(circle at 20% 15%, rgba(45, 106, 238, .18), transparent 34rem),
+    linear-gradient(135deg, #f7f9ff 0%, #e9eef9 100%);
 }
 
 .shell {
@@ -26,23 +26,17 @@ body {
   box-shadow: 0 2rem 6rem rgba(42, 54, 47, .12);
 }
 
-.brand {
-  display: grid;
-  place-items: center;
-  width: 4.5rem;
-  height: 4.5rem;
+.brand-icon {
+  display: block;
+  width: 5.5rem;
+  height: 5.5rem;
   margin-bottom: 2rem;
-  border-radius: 1.25rem;
-  background: #1e5f46;
-  color: white;
-  font-size: 1.15rem;
-  font-weight: 750;
-  letter-spacing: .08em;
+  filter: drop-shadow(0 .65rem 1.1rem rgba(24, 65, 156, .2));
 }
 
 .eyebrow {
   margin: 0 0 .75rem;
-  color: #5b7065;
+  color: #526b9c;
   font-size: .72rem;
   font-weight: 700;
   letter-spacing: .17em;
@@ -79,11 +73,10 @@ h1 {
   width: 42%;
   height: 100%;
   border-radius: inherit;
-  background: #1e5f46;
+  background: #2362d7;
   animation: travel 1.5s ease-in-out infinite alternate;
 }
 
-.failure .brand { background: #8b3d32; }
 .failure code {
   display: inline-block;
   padding: .45rem .7rem;
@@ -102,7 +95,7 @@ button {
   padding: .65rem 1.1rem;
   border: 0;
   border-radius: .5rem;
-  background: #1e5f46;
+  background: #2362d7;
   color: white;
   cursor: pointer;
   font: inherit;

@@ -25,6 +25,8 @@ for (const required of [
   '\\dist\\main\\index.js',
   '\\dist\\renderer\\startup.html',
   '\\dist\\renderer\\failure.html',
+  '\\dist\\renderer\\icons\\png\\app-icon-192.png',
+  '\\dist\\renderer\\icons\\png\\app-icon-256.png',
 ]) {
   if (!entries.includes(required)) throw new Error(`app.asar 缺少必需入口：${required}`)
 }
@@ -32,6 +34,15 @@ for (const entry of entries) {
   if (entry.includes('node_modules') || entry.endsWith('.map') || /^\\(?:src|scripts|native|deepseek-harness)(?:\\|$)/u.test(entry)) {
     throw new Error(`app.asar 包含禁止的开发资源：${entry}`)
   }
+}
+const allowedPackagedIcons = new Set([
+  '\\dist\\renderer\\icons',
+  '\\dist\\renderer\\icons\\png',
+  '\\dist\\renderer\\icons\\png\\app-icon-192.png',
+  '\\dist\\renderer\\icons\\png\\app-icon-256.png',
+])
+for (const entry of entries.filter(value => value.startsWith('\\dist\\renderer\\icons'))) {
+  if (!allowedPackagedIcons.has(entry)) throw new Error(`app.asar 包含非运行时图标资源：${entry}`)
 }
 const packagedManifest = JSON.parse(extractFile(archive, 'package.json').toString('utf8')) as Record<string, unknown>
 for (const forbidden of ['config', 'dependencies', 'devDependencies', 'optionalDependencies']) {

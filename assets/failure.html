@@ -3,14 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self'">
     <title>DSH Desktop 启动失败</title>
     <link rel="stylesheet" href="desktop.css">
     <script src="failure.js" defer></script>
   </head>
   <body>
     <main class="shell failure" aria-live="assertive">
-      <div class="brand">DSH</div>
+      <img class="brand-icon" src="icons/png/app-icon-192.png" alt="">
       <p class="eyebrow">启动检查已停止</p>
       <h1>未能启动 Harness</h1>
       <p id="message" class="message">桌面运行时校验或初始化失败。</p>
